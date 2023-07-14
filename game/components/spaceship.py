@@ -40,13 +40,15 @@ class Spaceship(Sprite):
 
     #movimiento de jugador
     def move_left(self):
-
-        if self.rect.left > 0:
-            self.rect.x -= self.SPACESHIP_SPEED
+        self.rect.x -= self.SPACESHIP_SPEED
+        if self.rect.left < 0:
+            self.rect.x = SCREEN_WIDTH - self.SPACESHIP_WIDTH
 
     def move_right(self): 
-        if self.rect.left < SCREEN_WIDTH - self.SPACESHIP_WIDTH:
-            self.rect.x += self.SPACESHIP_SPEED
+
+        self.rect.x += self.SPACESHIP_SPEED
+        if self.rect.left > SCREEN_WIDTH - self.SPACESHIP_WIDTH:
+           self.rect.x = 0
 
     def move_up(self):
         if self.rect.y > self.HALL_SCREEM_HEIGHT:
