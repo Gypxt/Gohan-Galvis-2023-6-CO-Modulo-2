@@ -1,22 +1,20 @@
 import pygame
 import random
 from pygame. sprite import Sprite
+from game.utils.constants import ENEMY_2
 
-from game.utils.constants import ENEMY_1, SCREEN_HEIGHT, SCREEN_WIDTH
+from game.utils.constants import  SCREEN_HEIGHT, SCREEN_WIDTH
 
-class Enemy(Sprite):
+class EnemyModel(Sprite):
     ENEMY_WIDTH = 40
     ENEMY_HEIGHT = 60
-  
-  
     Y_POS = 20
     SPEED_X = 5
     SPEED_Y = 10
     MOV_X = {0:'left', 1:'right'}
 
-
-    def __init__(self):
-        self.image = pygame.transform.scale(ENEMY_1, (self.ENEMY_WIDTH, self.ENEMY_HEIGHT))
+    def __init__(self, image):
+        self.image = pygame.transform.scale(image, (self.ENEMY_WIDTH, self.ENEMY_HEIGHT))
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(self.ENEMY_HEIGHT, SCREEN_WIDTH - self.ENEMY_WIDTH)
         self.rect.y = self.Y_POS
@@ -27,7 +25,9 @@ class Enemy(Sprite):
         self.index = 0
 
     def update(self, ships):
+        
         self.rect.y += self.speed_y
+
         if self.movement_x == 'left':
             self.rect.x -= self.speed_x
             self.change_movement_x()
