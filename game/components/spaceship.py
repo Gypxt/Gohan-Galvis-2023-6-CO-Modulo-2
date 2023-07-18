@@ -1,6 +1,7 @@
 import pygame
 
 from pygame.sprite import Sprite
+from game.components.bullets.bullet import Bullet
 
 
 from game.utils.constants import  SCREEN_HEIGHT, SPACESHIP, SCREEN_WIDTH
@@ -22,7 +23,7 @@ class Spaceship(Sprite):
         self.type = 'player'
        
    
-    def update(self):
+    def update(self, game):
         # Obtener el estado actual de las teclas
         keys = pygame.key.get_pressed()
         
@@ -37,6 +38,10 @@ class Spaceship(Sprite):
             self.move_up()
         elif keys[pygame.K_DOWN]:
             self.move_down()
+
+        if keys[pygame.K_e]:
+            self.shoot(game.bullet_manager)
+        
 
 
     #movimiento de jugador
@@ -62,4 +67,8 @@ class Spaceship(Sprite):
     def draw(self,screen):
         screen.blit(self.image,(self.rect.x,self.rect.y))
 
-    
+    def shoot(self, bullet_manager):
+
+        bullet = Bullet(self)
+        bullet_manager.add_bullet(bullet)
+            

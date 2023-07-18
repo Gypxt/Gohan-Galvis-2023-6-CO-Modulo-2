@@ -37,7 +37,7 @@ class Game:
                 self.playing = False
 
     def update(self):
-        self.player.update()
+        self.player.update(self)
         self.enemy_manager.update(self.bullet_manager)
         self.bullet_manager.update(self)
 
