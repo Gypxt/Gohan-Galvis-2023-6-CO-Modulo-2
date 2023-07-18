@@ -4,20 +4,18 @@ from game.components.enemies.enemy_1 import EnemyOne
 from game.components.enemies.enemy_2 import EnemyTwo
 
 class EnemyManager:
-    firs_enemy =  EnemyOne()
-    second_enemy =  EnemyTwo()
 
     def __init__(self):
         self.enemies = []
-        self.model = {0: self.firs_enemy.image, 1: self.second_enemy.image}
+        
 
 
-    def update(self):
+    def update(self, bullet_manager):
 
         self.add_enemy()
 
         for enemy in self.enemies:
-            enemy.update(self.enemies)
+            enemy.update(self.enemies, bullet_manager)
             
 
     def draw(self, screen):
@@ -28,11 +26,10 @@ class EnemyManager:
 
         if len(self.enemies) < 1:
 
-            enemy_type = random.randint(0, 1)
-            enemy = EnemyModel(self.model[enemy_type])
-
-            if enemy_type == 1:  
-                enemy.speed_y = 5  
-                enemy.speed_x = 10  
+            enemy_type = random.randint(1, 2)
+            if enemy_type == 1:
+                enemy = EnemyOne()
+            else:
+                enemy = EnemyTwo()
 
             self.enemies.append(enemy)
