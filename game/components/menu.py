@@ -25,12 +25,17 @@ class Menu:
         screen.blit(self.text, self.text_rect)
 
     def handle_events_on_menu(self, game):
+        keys =  pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.playing = False
                 game.running = False
-            elif event.type == pygame.KEYDOWN:
+            elif keys[pygame.K_s] :
                 game.run()
+                
+            if keys[pygame.K_h]:
+                if not game.playing:  
+                    game.points.show_high_scores = True
                 
 
     def reset(self, screen):

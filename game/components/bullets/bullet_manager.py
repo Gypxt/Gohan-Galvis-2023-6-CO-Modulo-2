@@ -16,7 +16,7 @@ class BulletManager:
                 if bullet.rect.colliderect(enemy.rect) and bullet.owner == 'player' and not enemy.type =='enemy2':
                     game.enemy_manager.enemies.remove(enemy)
                     self.player_bullets.remove(bullet)
-                    game.score += 1
+                    game.points.update(1)
                     
                 elif enemy.type =='enemy2' and bullet.rect.colliderect(enemy.rect) and bullet.owner == 'player':
                     self.player_bullets.remove(bullet)
@@ -25,8 +25,7 @@ class BulletManager:
                     if game.enemy_manager.damage_durability == 4:
                         game.enemy_manager.enemies.remove(enemy)
                         game.enemy_manager.damage_durability = 0
-                        game.score += 1
-                        
+                        game.points.update(2)
                    
 
         for bullet in self.enemy_bullets:
@@ -34,15 +33,13 @@ class BulletManager:
 
             if bullet.rect.colliderect(game.player.rect) and bullet.owner == 'enemy':
                 self.enemy_bullets.remove(bullet)
-                game.death_count += 1
-                game.score = 0
+                game.player.death_count += 1
                 game.playing =  False
                 pygame.time.delay(1000)
                 break
             elif bullet.rect.colliderect(game.player.rect) and bullet.owner == 'enemy2':
                 self.enemy_bullets.remove(bullet)
-                game.death_count += 1
-                game.score = 0
+                game.player.death_count += 1
                 game.playing =  False
                 pygame.time.delay(1000)
                 break

@@ -21,6 +21,7 @@ class Spaceship(Sprite):
         self.rect.y = self.Y_POS
         self.SPACESHIP_SPEED = 10
         self.type = 'player'
+        self.death_count = 0
        
    
     def update(self, game):
@@ -72,3 +73,7 @@ class Spaceship(Sprite):
         bullet = Bullet(self)
         bullet_manager.add_bullet(bullet)
             
+    def reset(self):
+        self.rect.x = self.X_POS
+        self.rect.y = self.Y_POS
+       
