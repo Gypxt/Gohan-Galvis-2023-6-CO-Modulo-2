@@ -7,6 +7,7 @@ class EnemyManager:
 
     def __init__(self):
         self.enemies = []
+        self.damage_durability = 0
         
 
 
@@ -33,3 +34,7 @@ class EnemyManager:
                 enemy = EnemyTwo()
 
             self.enemies.append(enemy)
+
+    def reset(self):
+        self.enemies = []
+        self.damage_durability = 0
