@@ -1,4 +1,6 @@
 import pygame
+from game.components.bullets.bullet import Bullet
+from game.utils.constants import SHIELD_TYPE, AUTO_FIRE_TYPE, SPEED_TYPE
 
 
 class BulletManager:
@@ -16,7 +18,7 @@ class BulletManager:
                 if bullet.rect.colliderect(enemy.rect) and bullet.owner == 'player' and not enemy.type =='enemy2':
                     game.enemy_manager.enemies.remove(enemy)
                     self.player_bullets.remove(bullet)
-                    game.points.update(1)
+                    game.score.update()
                     
                 elif enemy.type =='enemy2' and bullet.rect.colliderect(enemy.rect) and bullet.owner == 'player':
                     self.player_bullets.remove(bullet)
@@ -25,7 +27,7 @@ class BulletManager:
                     if game.enemy_manager.damage_durability == 4:
                         game.enemy_manager.enemies.remove(enemy)
                         game.enemy_manager.damage_durability = 0
-                        game.points.update(2)
+                        game.score.count += 2
                    
 
         for bullet in self.enemy_bullets:
@@ -33,16 +35,32 @@ class BulletManager:
 
             if bullet.rect.colliderect(game.player.rect) and bullet.owner == 'enemy':
                 self.enemy_bullets.remove(bullet)
-                game.player.death_count += 1
-                game.playing =  False
-                pygame.time.delay(1000)
-                break
+                if game.player.power_up_type != SHIELD_TYPE:
+                    game.death_count.update()
+                    game.leader_board.update(game.score.count)
+                    game.playing =  False
+                    pygame.time.delay(1000)
+                    break
             elif bullet.rect.colliderect(game.player.rect) and bullet.owner == 'enemy2':
                 self.enemy_bullets.remove(bullet)
-                game.player.death_count += 1
-                game.playing =  False
-                pygame.time.delay(1000)
-                break
+                if game.player.power_up_type != SHIELD_TYPE:
+                    game.death_count.update()
+                    game.leader_board.update(game.score.count)
+                    game.playing =  False
+                    pygame.time.delay(1000)
+                    break
+
+        if game.player.has_powe_up and game.player.power_up_type == AUTO_FIRE_TYPE:
+            if len(self.player_bullets) < 10000:
+                
+                bullet = Bullet(game.player)
+                self.player_bullets.append(bullet)
+
+        if game.player.has_powe_up and game.player.power_up_type == SPEED_TYPE:
+            game.player.SPACESHIP_SPEED = 20
+        else: 
+            game.player.SPACESHIP_SPEED = 10
+
 
     def draw(self, screen):
         

@@ -2,6 +2,7 @@ import random
 from game.components.enemies.enemy_model import EnemyModel
 from game.components.enemies.enemy_1 import EnemyOne
 from game.components.enemies.enemy_2 import EnemyTwo
+from game.components.enemies.enemy_3 import EnemyTree
 
 class EnemyManager:
 
@@ -27,11 +28,13 @@ class EnemyManager:
 
         if len(self.enemies) < 1:
 
-            enemy_type = random.randint(1, 2)
+            enemy_type = random.randint(1, 3)
             if enemy_type == 1:
                 enemy = EnemyOne()
-            else:
+            elif enemy_type == 2:
                 enemy = EnemyTwo()
+            else:
+                enemy = EnemyTree()
 
             self.enemies.append(enemy)
 
